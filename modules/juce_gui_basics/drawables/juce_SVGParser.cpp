@@ -452,9 +452,23 @@ private:
 
     static void setCommonAttributes (Drawable& d, const XmlPath& xml)
     {
-        auto compID = xml->getStringAttribute ("id");
-        d.setName (compID);
-        d.setComponentID (compID);
+       //BEGIN
+//        auto compID = xml->getStringAttribute ("id");
+//        d.setName (compID);
+//        d.setComponentID (compID);
+
+        // Experiment with Adobe XD
+        auto compID = xml->getStringAttribute("id");
+        auto dataName = xml->getStringAttribute("data-name");
+        if (dataName.isEmpty() || compID == dataName) {
+            d.setName(compID);
+            d.setComponentID(compID);
+        }
+        else {
+            d.setName(compID);
+            d.setComponentID(dataName);
+        }
+        // END
 
         if (isNone (xml->getStringAttribute ("display")))
             d.setVisible (false);
